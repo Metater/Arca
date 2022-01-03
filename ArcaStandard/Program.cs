@@ -2,19 +2,27 @@
 
 Console.WriteLine("Hello, World!");
 
-Console.WriteLine("What should be interpreted?");
+Console.WriteLine("What should be compiled?");
 
-string file = Directory.GetCurrentDirectory() + @"\" + Console.ReadLine() + ".arc";
+string file = Console.ReadLine()!;
 
-Console.WriteLine($"Interpreting {file}");
+Console.WriteLine($"Compiling...");
 
-Arcai arcai = new();
-
-foreach (string line in File.ReadLines(file))
+string[] lines = File.ReadAllLines(file);
+List<string> source = new();
+foreach (string line in lines)
 {
-    string[] split = line.Split(' ', StringSplitOptions.TrimEntries);
-    if (arcai.TryGetArchetype(split[0], out Archetype archetype))
-    {
-
-    }
+    string trimmed = line.Trim();
+    if (trimmed[..2] == "//") continue;
+    source.Add(trimmed);
 }
+
+BarcWriter writer = new();
+foreach (string line in source)
+{
+
+}
+
+string outputFile = file.Insert(file.Length - 3, "b");
+Console.WriteLine(outputFile);
+File.WriteAllBytes(outputFile, writer.CopyData());
