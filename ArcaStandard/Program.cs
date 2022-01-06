@@ -66,6 +66,5 @@ for (int i = 0; i < 10; i++)
 
 Console.WriteLine("Bytecode Size: " + writer.Length + " bytes");
 
-Arcai arcai = new();
-arcai.Load(writer.CopyData());
+Arcai arcai = new(writer.CopyData());
 arcai.Interpret();

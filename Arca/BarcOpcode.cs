@@ -1,12 +1,15 @@
 ﻿
-namespace Arca;
-
-public enum BarcOpcode : byte
+namespace Arca
 {
-	Noop,
-	Print,
-	Declare,
-	JumpRelativeSByte,
-	JumpRelativeShort,
-	JumpAbsolute,
+	public enum BarcOpcode : byte
+	{
+		Noop,
+		Load,
+		Print,
+		DeclareConstant,
+		JumpRelativeSByte,
+		JumpRelativeShort,
+		JumpAbsoluteUShort,
+		JumpAbsoluteInt,
+	}
 }
