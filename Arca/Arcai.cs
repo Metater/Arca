@@ -52,6 +52,7 @@ namespace Arca
 						break;
 					case BarcOpcode.Load:
 
+
 						break;
 					case BarcOpcode.Print:
 						Print();
