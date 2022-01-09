@@ -4,6 +4,8 @@
 	{
 		Noop,
 		Push,
+		Pop,
+		Call,
 		Print,
 		DeclareConstant,
 		Release,
