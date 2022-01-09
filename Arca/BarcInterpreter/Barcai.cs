@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Arca
+namespace Arca.BarcInterpreter
 {
-	public class Arcai
+	public class Barcai
 	{
 		private readonly BarcReader reader = new();
 		private readonly BarcConstant[] constantTable;
@@ -13,7 +13,7 @@ namespace Arca
 		private readonly BarcReference[] heap = new BarcReference[256];
 
 
-		public Arcai(byte[] bytecode)
+		public Barcai(byte[] bytecode)
 		{
 			reader.SetSource(bytecode);
 			int constantTableSize = reader.GetByte();
@@ -50,15 +50,17 @@ namespace Arca
 				{
 					case BarcOpcode.Noop:
 						break;
-					case BarcOpcode.Load:
-
-
+					case BarcOpcode.Push:
+						Push();
 						break;
 					case BarcOpcode.Print:
 						Print();
 						break;
 					case BarcOpcode.DeclareConstant:
 						DeclareConstant();
+						break;
+					case BarcOpcode.Release:
+						Release();
 						break;
 					case BarcOpcode.JumpRelativeSByte:
 						reader.SetPosition(reader.Position + reader.GetSByte());
@@ -85,19 +87,26 @@ namespace Arca
 			Console.WriteLine((sw.ElapsedTicks / 1000000d) + "ms");
 		}
 
+		private void Push()
+		{
+			byte position = reader.GetByte();
+			stack.Push(variableTable[position]);
+		}
+
 		private void Print()
 		{
-			BarcConstant constant = constantTable[reader.GetByte()];
-			switch (constant.type)
+			BarcValue value = stack.Pop();
+			switch (value.type)
 			{
-				case BarcConstantType.String:
-					Console.WriteLine(constant.GetString(reader));
+				case BarcValueType.Reference:
+					BarcReference reference = heap[value.Abyte];
+					Console.WriteLine(reference.data);
 					break;
-				case BarcConstantType.Int:
-					Console.WriteLine(constant.GetInt(reader));
+				case BarcValueType.Int:
+					Console.WriteLine(value.Aint);
 					break;
-				case BarcConstantType.Byte:
-					Console.WriteLine(constant.GetByte(reader));
+				case BarcValueType.Byte:
+					Console.WriteLine(value.Abyte);
 					break;
 			}
 		}
@@ -111,6 +120,9 @@ namespace Arca
 			{
 				case BarcConstantType.String:
 					value.type = BarcValueType.Reference;
+					value.Abyte = position;
+					StringData data = new(constant.GetString(reader));
+					heap[position] = new BarcReference(BarcReferenceType.String, data);
 					break;
 				case BarcConstantType.Int:
 					value.type = BarcValueType.Int;
@@ -122,6 +134,17 @@ namespace Arca
 					break;
 			}
 			variableTable[position] = value;
+		}
+
+		private void Release()
+		{
+			byte position = reader.GetByte();
+			BarcValue value = variableTable[position];
+			variableTable[position].type = BarcValueType.Invalid;
+			if (value.type == BarcValueType.Reference)
+			{
+				heap[value.Abyte] = null;
+			}
 		}
 	}
 }

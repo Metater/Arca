@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
 
-namespace Arca
+namespace Arca.BarcInterpreter
 {
 	public struct BarcConstant
 	{

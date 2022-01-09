@@ -1,12 +1,12 @@
-﻿
-namespace Arca
+﻿namespace Arca.BarcInterpreter
 {
 	public enum BarcOpcode : byte
 	{
 		Noop,
-		Load,
+		Push,
 		Print,
 		DeclareConstant,
+		Release,
 		JumpRelativeSByte,
 		JumpRelativeShort,
 		JumpAbsoluteUShort,

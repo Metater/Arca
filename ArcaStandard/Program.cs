@@ -1,4 +1,6 @@
 ﻿using Arca;
+using Arca.ArcCompiler;
+using Arca.BarcInterpreter;
 
 /*
 Console.WriteLine("Hello, World!");
@@ -66,5 +68,5 @@ for (int i = 0; i < 10; i++)
 
 Console.WriteLine("Bytecode Size: " + writer.Length + " bytes");
 
-Arcai arcai = new(writer.CopyData());
+Barcai arcai = new(writer.CopyData());
 arcai.Interpret();

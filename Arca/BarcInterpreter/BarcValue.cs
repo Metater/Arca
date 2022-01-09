@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Arca
+namespace Arca.BarcInterpreter
 {
 	[StructLayout(LayoutKind.Explicit)]
 	public struct BarcValue
@@ -15,6 +15,9 @@ namespace Arca
 
 		[FieldOffset(1)]
 		public byte Abyte;
+
+		[FieldOffset(1)]
+		public bool Abool;
 	}
 
 	public enum BarcValueType : byte
@@ -23,5 +26,6 @@ namespace Arca
 		Reference,
 		Int,
 		Byte,
+		Bool,
 	}
 }
