@@ -32,6 +32,8 @@ File.WriteAllBytes(outputFile, writer.CopyData());
 
 */
 
+
+/*
 BarcWriter writer = new();
 
 writer.Put((byte)4);
@@ -70,3 +72,7 @@ Console.WriteLine("Bytecode Size: " + writer.Length + " bytes");
 
 Barcai arcai = new(writer.CopyData());
 arcai.Interpret();
+*/
+
+string source = "test";
+Arcac arcac = new(source.Split('\n'));

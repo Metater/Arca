@@ -16,7 +16,7 @@ namespace Arca.ArcCompiler
 			foreach (string sourceLine in sourceLines)
 			{
 				string sourceLineTrimmed = sourceLine.Trim(' ');
-				if (sourceLineTrimmed.Length >= 2 && sourceLineTrimmed.Substring(0, 2) == "//")
+				if (sourceLineTrimmed.Length >= 2 && sourceLineTrimmed[..2] == "//")
 					continue;
 				if (string.IsNullOrWhiteSpace(sourceLineTrimmed))
 					continue;

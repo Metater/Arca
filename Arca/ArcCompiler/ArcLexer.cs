@@ -57,7 +57,13 @@ namespace Arca.ArcCompiler
 
 		public ArcToken ReadIdentifier()
 		{
-			return null;
+			string result = "";
+			while (char.IsLetterOrDigit(currentChar) && !eol)
+            {
+				result += currentChar;
+				Advance();
+            }
+			return new ArcToken("identifier", result);
 		}
 
 		public ArcToken ReadNumeric()
