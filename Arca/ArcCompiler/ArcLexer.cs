@@ -6,7 +6,7 @@ namespace Arca.ArcCompiler
 {
 	public class ArcLexer
 	{
-		private List<string> source;
+		private readonly List<string> source;
 
 		private int readPos = 0;
 		private int line = 0;
@@ -68,7 +68,25 @@ namespace Arca.ArcCompiler
 
 		public ArcToken ReadNumeric()
 		{
-			return null;
+			string result = "";
+			bool isDecimal = false;
+			if (currentChar == '-')
+            {
+				result += currentChar;
+				Advance();
+            }
+			else if (currentChar == '+')
+				Advance();
+			while ((char.IsDigit(currentChar) || (currentChar == '.') && !isDecimal) && !eol)
+            {
+				if (currentChar == '.') isDecimal = true;
+				result += currentChar;
+				Advance();
+            }
+			object value;
+			if (isDecimal)
+				return new ArcToken("double", value);
+			return new ArcToken("double", value);
 		}
 
 		public ArcToken ReadEnclosed(char closing, string type)
