@@ -74,5 +74,7 @@ Barcai arcai = new(writer.CopyData());
 arcai.Interpret();
 */
 
-string source = "test";
+string source = "int count 42\n" +
+				"count.add 1\n" +
+				"count.println";
 Arcac arcac = new(source.Split('\n'));

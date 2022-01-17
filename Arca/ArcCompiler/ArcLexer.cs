@@ -77,16 +77,22 @@ namespace Arca.ArcCompiler
             }
 			else if (currentChar == '+')
 				Advance();
-			while ((char.IsDigit(currentChar) || (currentChar == '.') && !isDecimal) && !eol)
+			while ((char.IsDigit(currentChar) || (currentChar == '.' && !isDecimal)) && !eol)
             {
 				if (currentChar == '.') isDecimal = true;
 				result += currentChar;
 				Advance();
             }
-			object value;
 			if (isDecimal)
-				return new ArcToken("double", value);
-			return new ArcToken("double", value);
+            {
+                _ = double.TryParse(result, out double num);
+				return new ArcToken("dec", num);
+			}
+			else
+            {
+				_ = int.TryParse(result, out int num);
+				return new ArcToken("int", num);
+			}
 		}
 
 		public ArcToken ReadEnclosed(char closing, string type)

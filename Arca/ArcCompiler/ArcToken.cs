@@ -15,10 +15,6 @@ namespace Arca.ArcCompiler
 			this.value = value;
 		}
 
-		public ArcToken(string type)
-		{
-			this.type = type;
-			value = null;
-		}
+		public ArcToken(string type) : this(type, null) { }
 	}
 }
